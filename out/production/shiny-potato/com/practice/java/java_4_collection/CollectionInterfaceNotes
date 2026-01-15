@@ -1,0 +1,84 @@
+                                                                                     Object Class
+                                                                            (parent class of all classes)
+                                                                                 (Total 10 methods)
+                                                                                           |
+                     getClass(), hashCode(), equals(obj), clone(), toString(), notify(), notifyAll(), wait(long timeout), wait(long timeout, int nanosecond), finalize()
+
+
+                                                                                    String Class
+                                       (Immutable class - make class as final class that have final data member. eg - wrapper classes & String class. )
+                                                                                       (methods)
+                                                                                           |
+                                          length(), charAt(inx), indexOf(ch), lastIndexOf(ch), toUpperCase(), toLowerCase(), equalIgnoreCase(str)
+                                 concat(), contains(str), compareTo(), subString(startIdx), subString(startIdx, endIdx), trim(), replace(old, new), valueOf(int)
+                                             startWith(str), endWith(str), format(), join(), equals(), isEmpty(), slit(regex, limit), intern()
+
+
+
+                                                           StringBuffer(thread-safe) Class | StringBuilder(non-thread safe) Class
+                                                                                    (mutable class)
+                                                                                       (methods)
+                                                                                           |
+                                          append(str), insert(offset, str), replace((startIdx, endIdx, str), delete(startIdx, endIdx), reverse(),
+                     capacity() default 16 : (oldCapacity * 2) + 2, ensureCapacity(minCapacity), charAt(inx), length(), subString(startIdx), subString(startIdx, endIdx)
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                                                                  Collections Class
+                                                                                  (utility class)
+                                       (Total 60 methods - all methods are static, static methods for operating on or returning collections)
+                                                                                          |
+                                sort(), swap(), binarySearch(), reverse(), reverseOrder(), rotate(), shuffle(), copy(), fill(), frequency(), disjoint(),
+                                                     addAll(), replaceAll(), min(), max(), indexOfSubList(), LastIndexOfSubList(),
+                                            emptyEnumeration(), emptyIterator(), emptyListIterator(), emptyList(), emptySet(),emptyMap(),
+                                                       singleton(), singletonList(),singletonMap(), unmodifiableCollection()
+                                               synchronizedCollection(), synchronizedList(), synchronizedSet(), synchronizedMap()
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+                                                                                      Iterable(I)
+                                                                                      iterator()
+                                                                                          |
+                                                                                  Collection(I) 1.2v
+                                                                               (Works on group of objects)
+
+                                                                                          |
+                                 ________________________________________________________________________________________________________________________
+                                 |                                                        |                                                             |
+                            List(I) 1.2v                                              Set(I) 1.2v                                                 Queue(I) 1.5v
+                                 |                                                        |                                                             |
+                ____________________________________                      ____________________________________                         ____________________________________
+                |                |                 |                      |                                  |                         |                                  |
+          ArrayList 1.2v   LinkedList 1.2v    Vector 1.0v             HashSet 1.2v                  SortedSet(I) 1.2v             PriorityQueue 1.5v                BlockingQueue 1.5v
+                                                   |                      |                                  |                                                            |
+                                               Stack 1.0v          LinkedHashSet 1.4v               NavigableSet(I) 1.6v                                     ______________________________
+                                                                                                             |                                               |                            |
+                                                                                                       TreeSet 1.2v                                PriorityBlockingQueue 1.5v    LinkedBlockingQueue 1.5v
+
+
+
+
+
+                                                                                    Map(I) 1.2v
+                                                                        (Works on group of key/value pair)
+                                                                                         |
+                                 ______________________________________________________________________________________________________________________
+                                 |                           |                           |                             |                              |
+                            HashMap 1.2v               WealHashMap 1.2v          IdentityHashMap 1.4v          SortedHashMap(I) 1.2v            Dictionary 1.0v
+                                 |                                                                                     |                              |
+                          LinkedHashMap 1.4v                                                                 NavigableHashMap(I) 1.6v            HashTable 1.0v
+                                                                                                                       |                              |
+                                                                                                                   TreeMap 1.2v                 Properties 1.0v
+
+
+                                                           |--> Comparable(I) >  compareTo() - default natural sorting
+                          SortedSet/SortedMap - Sorting -> |
+                                                           |--> Comparator(I) >  compare() - customize sorting
+                          TreeSet & TreeMap - Heterogeneous objects not allowed only homogeneous (same) type, Hashtable used, Sorted elements/balanced tree
+

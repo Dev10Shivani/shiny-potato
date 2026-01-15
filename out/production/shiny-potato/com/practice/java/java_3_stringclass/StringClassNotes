@@ -1,0 +1,436 @@
+                                                                                     Object Class
+                                                                            (parent class of all classes)
+                                                                                 (Total 10 methods)
+                                                                                           |
+                     getClass(), hashCode(), equals(obj), clone(), toString(), notify(), notifyAll(), wait(long timeout), wait(long timeout, int nanosecond), finalize()
+
+
+                                                                                String Class (Thread-safe)
+                                                                                    (java.lang pkg)
+                                                               (Immutable class, implements Serializable(I), Comparable(I), CharSequence(I))
+                                       (Immutable class - make class as final class that have final data member. eg - wrapper classes & String class. )
+                                                                                       (methods)
+                                                                                           |
+                                    length(), charAt(inx), toCharArray(), indexOf(ch), lastIndexOf(ch), toUpperCase(), toLowerCase(), equalIgnoreCase(str)
+                                 concat(), contains(str), compareTo(), subString(startIdx), subString(startIdx, endIdx), trim(), replace(old, new), valueOf(int)
+                                             startWith(str), endWith(str), format(), join(), equals(), isEmpty(), slit(regex, limit), intern()
+
+
+                                                               String Compare - equals(), == operator, compareTo()
+                                                               equals()	> Just check equality
+                                                               compareTo() > Check ordering + equality (sorting, dictionary order)
+                                                               A == A → 0 → strings are equal
+                                                               A < B → -1 → strings is lexicographically smaller
+                                                               B > A → 1 → strings is lexicographically greater
+
+                                                               String Concatination - concat(), + operator
+                                                               concat() creates a new String, but you didn’t store it.
+
+                                                               the String object did NOT change — the reference changed
+                                                               What “String is immutable” actually means
+                                                                    Once a String object is created, its value can never be changed
+                                                                    You cannot modify the existing object, but you can point the variable to a new object.
+
+                                                               MOST IMPORTANT 🔥
+                                                                       ❌ This did NOT happen
+                                                                       "Test" → changed to "Test1"
+
+                                                                       ✅ This happened
+                                                                       str1 → "Test"     (old)
+                                                                       str1 → "Test1"    (new object)
+
+                                                               Simple analogy
+                                                               Think of String as written with permanent ink.
+                                                               You cannot erase or edit the text
+                                                               You can only throw the paper away and write on a new paper
+
+                                                               Concept	               >    Explanation
+                                                               String immutable	Object >    value never changes
+                                                               Variable reassignment   >    Reference changes
+                                                               New value	           >    New String object created
+                                                               Old object              >    Remains unchanged
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+1️⃣ Why String is immutable
+
+A. Security
+    Strings are heavily used in security-sensitive areas:
+    * Database URLs
+    * File paths
+    * Network connections
+    * Class loading
+    * Usernames & passwords
+
+     Example problem if String were mutable
+    String url = "jdbc:mysql://localhost:3306/db";
+
+    If String were mutable:
+    * Another reference could change the value
+    * DB connection could be redirected to a malicious server
+
+    ❗ Because Strings are immutable:
+    * Once created → no one can change it
+    * safely reuse the same String
+
+B. Performance (String Pool)
+    Java maintains a String Constant Pool.
+
+    String s1 = "Java";
+    String s2 = "Java";
+    Only one object is created.
+
+    If String were mutable:
+    * One reference changing it would affect all references
+    * Pooling would be impossible
+
+    ❗Immutability makes String Pool memory-efficient & fast
+
+C. Thread Safety
+    * Immutable objects are naturally thread-safe
+    * Multiple threads can use the same String without synchronization
+
+D. Hashing & Collections
+    Strings are commonly used as keys in HashMap
+
+    HashMap<String, Integer> map = new HashMap<>();
+
+    If String were mutable:
+    * Hash value would change
+    * Object would become unreachable
+
+    ❗Immutability ensures hashcode consistency
+
+---
+Summary: Why String is immutable
+
+| Reason        | Benefit                            |
+| ------------- | ---------------------------------- |
+| Security      | Prevents unauthorized modification |
+| Performance   | Enables String Pool                |
+| Thread safety | No synchronization needed          |
+| Hashing       | Stable hashcode                    |
+
+  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                                           StringBuffer(thread-safe) Class | StringBuilder(non-thread safe) Class
+                                                                 (mutable class, implements Serializable(I), CharSequence(I))
+                                             not comparable(compareTo) Natural sorting order support- use comparator(compare) for custom sorting,
+                                                                    (same methods for StringBuilder & StringBuffer)
+                                                                                           |
+                                          append(str), insert(offset, str), replace((startIdx, endIdx, str), delete(startIdx, endIdx), reverse(),
+                     capacity() default 16 : (oldCapacity * 2) + 2, ensureCapacity(minCapacity), charAt(inx), length(), subString(startIdx), subString(startIdx, endIdx)
+
+                                                             StringBuffer - synchronized, Thread-safe, performance slow
+                                                             StringBuilder - non-synchronized, not Thread-safe, performance fast
+
+Difference: String vs StringBuilder vs StringBuffer
+
+| Feature                   | String                                 | StringBuilder                               | StringBuffer |
+| --------------------------| ---------------------------------------| --------------------------------------------| ---------------------------------------------|
+| Mutable                   | ❌ No                                  | ✅ Yes                                      | ✅ Yes                                       |
+| Thread-safe (synchronized)| ✅ Yes                                 | ❌ No                                       | ✅ Yes                                       |
+| Performance               | Slow                                   | Fast                                        | Medium                                       |
+| Memory                    | More objects                           | Efficient                                   | Efficient                                    |
+| Introduced in             | Java 1.0                               | Java 1.5                                    | Java 1.0                                     |
+| Example                   | String s = "Hi";                       | StringBuilder sb = new StringBuilder("Hi"); | StringBuffer sb = new StringBuffer("Hi");    |                                                                                                                                                                                                 
+|                           | s = s + " Hello"; //creates new object | sb.append(" Hello"); //same object modified | sb.append(" Hello"); //same object modified |
+
+When to use what?
+
+* String → Fixed text, constants, keys
+* StringBuilder → Heavy string manipulation (single-thread)
+* StringBuffer → Heavy manipulation (multi-thread)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Heap vs String Constant Pool
+
+🔹 String Constant Pool (SCP)
+
+    * Special memory inside Heap
+    * Stores String literals
+    * Avoids duplicate objects
+
+    String s1 = "Test";
+    String s2 = "Test";
+    String Constant Pool
+    ┌─────────────┐
+    │ "Test"      │◄── s1, s2
+    └─────────────┘
+
+🔹 Heap Memory
+
+    * Stores objects created using `new`
+    * Always creates a new object
+
+    String s3 = new String("Test");
+
+    Heap
+    ┌──────────────────────┐
+    │ new String("Test")   │◄── s3
+    └──────────────────────┘
+
+
+🔹 Combined Diagram
+
+               Heap Memory
+    ┌────────────────────────────┐
+    │  String Constant Pool      │
+    │  ┌─────────────┐           │
+    │  │ "Test"      │◄─ s1, s2  │
+    │  └─────────────┘           │
+    │                            │
+    │  new String("Test") ◄─ s3  │
+    └────────────────────────────┘
+
+
+⚠️ Important Interview Points
+* SCP is part of Heap (since Java 7)
+
+🔹 Before Java 7 (Java 6 and earlier)
+   Where was SCP?
+    👉 PermGen (Permanent Generation)
+    SCP was stored in PermGen
+    PermGen had fixed size
+    Not cleaned properly by Garbage Collector
+
+    ❌ Problems
+    OutOfMemoryError: PermGen space
+    Large number of string literals could crash the JVM
+    Hard to tune memory
+
+    Diagram (Java ≤ 6)
+    JVM Memory
+    ┌──────────────────────┐
+    │ Heap                 │
+    │  (Objects)           │
+    └──────────────────────┘
+    ┌──────────────────────┐
+    │ PermGen              │
+    │  └─ String Pool      │
+    │  └─ Class Metadata   │
+    └──────────────────────┘
+
+🔹 Java 7
+    What changed?
+    👉 String Constant Pool moved from PermGen to Heap
+    Why?
+    👉 Heap is larger & flexible, Better Garbage Collection, Reduced memory leaks, Improved performance
+
+    Diagram (Java 7+)
+    Heap Memory
+    ┌────────────────────────────┐
+    │ String Constant Pool       │
+    │ ┌─────────────┐            │
+    │ │ "Hello"     │◄── s1, s2  │
+    │ └─────────────┘            │
+    │                            │
+    │ new String("Hello") ◄─ s3  │
+    └────────────────────────────┘
+
+🔹 Java 8 and above (Another change)
+   What happened to PermGen?
+    ❌ PermGen removed completely
+
+    Replaced by:
+    👉 Metaspace
+
+    Feature	        | PermGen	    | Metaspace
+    Memory location	| JVM memory	| Native memory
+    Auto resize	    | ❌ No	        |✅ Yes
+    OOM issues	    | Common	    | Rare
+    Stores Strings	|❌ No	        |❌ No
+
+    ⚠️ SCP stays in Heap, not in Metaspace.
+------------------------------------------------------------------------------------------------
+🔹 Summary of Changes
+Java Version	SCP Location
+Java ≤ 6	    PermGen
+Java 7	        Heap (moved)
+Java 8+	        Heap (unchanged)
+
+🔹 Why moving SCP to Heap was important (Interview Gold ⭐)
+Better GC support
+No PermGen OOM due to strings
+More memory available
+Simpler JVM tuning
+Improved application stability
+
+🔹 Common Interview Q&A
+Q: Is SCP part of Metaspace?
+❌ No
+✔ SCP is part of Heap
+
+Q: Does new String("A") store object in SCP?
+❌ No
+✔ Object in Heap, literal "A" in SCP
+
+Q: What does intern() do?
+✔ Moves/returns string reference from SCP (Heap in Java 7+)
+
+🔑 One-line Interview Answer
+Before Java 7, SCP was in PermGen causing memory issues.
+From Java 7 onward, SCP moved to Heap for better GC and scalability.
+Java 8 removed PermGen entirely and introduced Metaspace.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+String.intern()` behavior version-wise
+
+🔹 What is `String.intern()`?
+    👉 `intern()` returns a reference from the String Constant Pool (SCP).
+    * If the string already exists in SCP → returns existing reference
+    * If not present → adds it to SCP and returns reference
+
+🔹 Behavior BEFORE Java 7 (Java 6 and earlier)
+    📍 Where was SCP?
+    ➡️ PermGen
+    🔹 intern() behavior
+        * Creates a NEW copy of the string in SCP (PermGen)
+        * Even if the string existed in Heap, a new object was created
+
+        Example (Java ≤ 6)
+        String s1 = new String("Java");
+        String s2 = s1.intern();
+        System.out.println(s1 == s2); // false
+        
+        Memory diagram
+        
+        Heap
+        ┌───────────────────┐
+        │ new String("Java")│ ◄─ s1
+        └───────────────────┘
+        PermGen (SCP)
+        ┌─────────────┐
+        │ "Java"      │ ◄─ s2 (new copy)
+        └─────────────┘
+        
+        ✔ Two different objects
+        ❌ Extra memory usage
+
+🔹 Behavior AFTER Java 7 (Java 7, 8, 11, 17…)
+     📍 Where is SCP?
+    ➡️ Heap
+     🔹 intern() behavior
+        * No new copy is created
+        * If SCP doesn’t have it → heap object reference is reused
+        * More memory efficient
+
+        🔹Example 1: intern after Java 7
+
+        String s1 = new String("Java");
+        String s2 = s1.intern();
+        System.out.println(s1 == s2); // true
+
+        Memory diagram
+
+        Heap
+        ┌────────────────────────────┐
+        │ String Constant Pool       │
+        │                            │
+        │ new String("Java") ◄─ s1,s2│
+        └────────────────────────────┘
+
+        ✔ Same object reused
+        ✔ No duplicate object
+
+        🔹 Example 2: Literal first, then intern
+
+        String s1 = "Hello";
+        String s2 = new String("Hello");
+        String s3 = s2.intern();
+
+        System.out.println(s1 == s3); // true
+        System.out.println(s2 == s3); // false
+
+         Explanation
+        * `"Hello"` already exists in SCP
+        * `intern()` returns SCP reference
+
+
+        🔹 Example 3: Runtime string creation
+
+        String s1 = new String("Hel") + new String("lo");
+        String s2 = s1.intern();
+        String s3 = "Hello";
+
+        System.out.println(s1 == s2); // true (Java 7+)
+        System.out.println(s2 == s3); // true
+
+         Why?
+        * `"Hello"` not in SCP before `intern()`
+        * Heap object is added to SCP
+
+---
+
+🔹 Summary Table: intern() behavior
+
+| Java Version | SCP Location | intern() creates new object? |
+| ------------ | ------------ | ---------------------------- |
+| Java ≤ 6     | PermGen      | ✅ Yes                        |
+| Java 7+      | Heap         | ❌ No (reuse heap object)     |
+
+---
+
+🔹 Why intern() was changed?
+
+1. Reduce memory duplication
+2. Avoid PermGen OOM
+3. Improve performance
+4. Better GC handling
+
+---
+
+🔹 When SHOULD you use intern()?
+
+ ✅ Good use cases
+* Large number of duplicate strings
+* Memory optimization in high-scale systems
+* Parsing heavy text (logs, tokens, keywords)
+
+ ❌ Avoid when
+* Strings are mostly unique
+* Uncontrolled user input
+* Memory pressure is high
+
+---
+🔹 Quick Interview Trick Question
+
+String s1 = new String("A");
+String s2 = "A";
+System.out.println(s1.intern() == s2);
+✔ Output: `true` (Java 7+)
+
+---
+
+IMPORTANT (Java 14 rules to remember)
+
+✔ String Constant Pool (SCP) is inside Heap
+✔ intern() does NOT create a new object
+✔ If SCP already has the string → returns SCP reference
+✔ If not → heap object itself is placed into SCP
+
+FINAL INTERVIEW SUMMARY (Java 14)
+SCP is inside Heap
+intern() reuses heap object if SCP is empty
+Literals always refer to SCP
+
+
+------------------------------------------------------------------------------------------------------
+Concatenation behavior
+String a = "A" + "B";  // Compile time → SCP
+String b = "A";
+b += "B";   // Runtime → Heap
+
+hashCode() & HashMap usage
+String hashcode is cached
+Makes String ideal as HashMap key
+❗ Immutability is why String works safely as a key.
+
+Performance issue with +
+for(...) {
+   s = s + "a";  // BAD
+}
+✔ Use StringBuilder
+
+
