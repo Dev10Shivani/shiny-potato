@@ -1,0 +1,92 @@
+Two Sum
+
+Problem statement
+Given an array and a target, find 2 numbers whose sum = target
+Return their indices
+
+✅ Example:
+nums = [2, 7, 11, 15]
+target = 9
+Answer: [0, 1] because 2 + 7 = 9
+
+Why HashMap?
+Because you want fast lookup:
+For each number x
+Check if target - x already exists
+
+✅ Key idea:
+Store: value → index
+Example:
+target = 9
+current = 7
+need = 2
+if 2 exists in map → answer found
+
+-------------------------------------------------------------------------------
+Valid Anagram
+
+Problem statement
+Two strings are anagrams if:
+same characters
+same frequency
+order can be different
+
+✅ Example:
+s = "anagram"
+t = "nagaram"
+Output = true
+
+❌ Example:
+s = "rat"
+t = "car"
+Output = false
+
+Why HashMap / Frequency array?
+Because you compare counts of characters
+✅ Best simple approach:
+count characters in s
+subtract counts using t
+all must become 0
+
+------------------------------------------------------------------
+Contains Duplicate
+
+Problem statement
+Given array, return true if any number appears more than once
+
+✅ Example:
+nums = [1,2,3,1]
+Output = true
+
+✅ Best approach:
+Use HashSet:
+if number already exists in set → duplicate found
+
+------------------------------------------------------------------
+✅ Frequency Based
+
+First Unique Character: find first character whose count = 1
+Majority Element: element occurring > n/2 times
+Top K Frequent Elements: most repeated numbers
+
+✅ Grouping / Mapping
+Group Anagrams: group words that are anagrams together
+Example: ["eat","tea","tan","ate"]
+→ [["eat","tea","ate"], ["tan"]]
+
+✅ Prefix Sum + HashMap (Important for backend interviews)
+Subarray Sum Equals K
+Meaning: count subarrays whose sum = k
+Example:
+[1,2,3], k=3
+Subarrays: [1,2], [3] → answer = 2
+
+✅ Sliding Window + HashMap
+Longest substring without repeating
+Meaning: maximum length substring with all unique chars
+Example: "abcabcbb" → "abc" length 3
+
+Minimum Window Substring
+Meaning: smallest substring containing all characters of another string
+Example: "ADOBECODEBANC", "ABC" → "BANC"
+----------------
