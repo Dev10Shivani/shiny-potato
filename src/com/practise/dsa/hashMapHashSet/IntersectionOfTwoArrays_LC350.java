@@ -60,7 +60,8 @@ public class IntersectionOfTwoArrays_LC350 {
             num = 2 (again)
             map.get(2)=1 > 0 ✅
             ➡ add 2 → result = [2,2]
-            ➡ decrease count → map becomes {1=2, 2=0}*/
+            ➡ decrease count → map becomes {1=2, 2=0}
+            */
 
             // Convert List<Integer> to int[]
            return result.stream().mapToInt(Integer::intValue).toArray();

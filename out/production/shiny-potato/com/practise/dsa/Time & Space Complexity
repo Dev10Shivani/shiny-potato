@@ -1,0 +1,49 @@
+Time Complexity : Relation between input size & Running Time (Operation)
+ex. input is N then running will be N times so O(N)
+
+Best Case: Minimum time : omega -^-(1)
+Average Case : Average time : thita @(n+1)/2 => @(n)
+Worst Case : Max time : big oh O(n)
+
+Always check for worst case
+
+examples:
+for(0 to n)
+    for(0 to m)
+=> O(n*m) all n rows will execute m times
+
+for(0 to n)
+for(0 to m)
+=>O(n+m) as both loops are individual not depend on each other
+
+here if
+for(0 to n) --> n=3
+for(0 to m) --> n=2
+            -->O(3+2) --> O(5)
+
+But if
+for(0 to n) --> n=10^3
+for(0 to m) --> n=2
+            -->O(10^3) as its clear and more
+
+Compare Time Complexity:
+
+        O(n)    O(n^2)      O(n^3)
+n=1       1        1          1
+n=2       2        4          8
+n=2       3        9          27
+n=10^5   10^5     10^10      10^30
+         Best      Avg       worst
+         Case      case      case
+
+Dynamic Programming : optimize the code complexity
+
+------------------------------------------------------
+Space Complexity : How many elements stores in the memory
+
+space is constant, not depend on input size :
+example : through cmd arg pass n value to constant, like scanner sc; int n = sc.nextInt();
+here n will shrink or grow its constant. will get once. so space complexity is O(n)
+
+space depend on input size :
+example : Arrays, depend on number of element we store O(n) -> if full then double the size 3/4 times

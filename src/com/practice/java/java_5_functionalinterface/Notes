@@ -1,0 +1,30 @@
+Collectors Class methods:
+
+toCollection(supplyerFactory)
+toList() / toUnmodifiableList()
+toSet() / toUnmodifiableSet()
+joining() /joining(delimiter) /joining(delimiter, prefix, suffix)
+mapMerger(mergeFunction)
+mapping(Function, Collector)
+flatMapping(Function, Collector)
+filtering(Predicate,Collector)
+CollectingAndThen(Collector, Function)
+counting()
+minBy(Comparator)
+maxBy(Comparator)
+summingInt(ToIntFunction)
+summingLong(ToLongFunction)
+summingDouble(ToDoubleFunction)
+sumWithCompensation(double[])
+computeFinalSum(double[])
+averagingInt(ToIntFunction)/long/double
+reducing(identity, BinaryOperator)/ reducing(BinaryOperator) /reducing(identity, Function, BinaryOperator)
+boxSupplier(identity)
+groupingBy(Function)/ groupingBy(Function, Collector) / groupingBy(Function, Supplier, Collector)
+groupingByConcurrent(Function) / groupingByConcurrent(Function, Supplier, Collector)
+partitioningBy(Predicate) /partitioningBy(Predicate, Collector)
+toMap(Function, Function, BinaryOperator),
+toMap(Function, Function, BinaryOperator, Supplier),
+toConcurrentMap(Function, Function)
+toUnmodifiableMap(FunctionkeyMapper, FunctionValueMapper)
+teeing(Collector, Collector, BiFunction)
