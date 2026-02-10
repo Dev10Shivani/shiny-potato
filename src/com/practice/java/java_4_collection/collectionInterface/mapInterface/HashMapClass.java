@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class HashMapClass {
     public static void main(String[] args) {
-         /*HashMap = Key → Value storage
+         /*MapNotes = Key → Value storage
             store something like:
             number → index OR character → frequency(count)
             Fast lookup because it uses hashing*/
@@ -17,7 +17,7 @@ public class HashMapClass {
             map.getOrDefault(key, 0);
             map.remove(key);*/
 
-            /*Use HashMap when:
+            /*Use MapNotes when:
             You want frequency/count
             You want fast search
             You want to store mapping like name → marks, value → index*/

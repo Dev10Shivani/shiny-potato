@@ -121,6 +121,15 @@ public class ArrayWithPrograms {
             System.out.println("Second largest: " + secondLargest);
         }
 
+        //stream
+        int secondLargest1 = Arrays.stream(arr)
+                .distinct()
+                .boxed()
+                .sorted(Collections.reverseOrder())
+                .skip(1)
+                .findFirst()
+                .orElseThrow(()-> new RuntimeException("second largest not found"));
+
 /*        Integer.MIN_VALUE is the smallest possible int value in Java.
         ✅ Value:
         Integer.MIN_VALUE = -2147483648
@@ -266,7 +275,7 @@ public class ArrayWithPrograms {
 
         System.out.println("Missing: " + (total - sum));
 
-//        9. Find frequency of each element using HashMap.
+//        9. Find frequency of each element using MapNotes.
 //        Map<Integer, Long> map =  Arrays.stream(arr)
 //                .collect(Collectors.groupingBy(Function.identity()), Collectors.counting()))
 //        .EntrySet.stream().forEach(entry -> entry.value >= 1 )
@@ -305,6 +314,7 @@ public class ArrayWithPrograms {
                 firstIndex.put(val, idx2);
             } else {
                 int first = firstIndex.get(val);
+                System.out.println("First: " + first + ", val: " + val);
                 if (first < bestIndex) {
                     bestIndex = first;
                     repeatingElement = val;

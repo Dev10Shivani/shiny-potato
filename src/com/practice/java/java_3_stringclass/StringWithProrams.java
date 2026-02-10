@@ -43,7 +43,6 @@ public class StringWithProrams {
 //        2. Check if a string is palindrome (ignore case).
             String strPal = "Madam";
             String revStrPal = "";
-            boolean isStrPal = true;
 
             strPal = strPal.toLowerCase();
             for(int s = strPal.length()-1; s >= 0; s--){
@@ -56,6 +55,8 @@ public class StringWithProrams {
             else
                 System.out.println("String is not palindrome");
 
+            //approach 2 : 2 pointer
+            boolean isStrPal = true;
             for(int i=0, j=strPal.length()-1; i<j; i++, j--){
                 if(strPal.charAt(i) != strPal.charAt(j)){
                     isStrPal = false;
@@ -124,8 +125,9 @@ public class StringWithProrams {
                 dupStr.chars().mapToObj(c->(char)c)
                 .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()));
 
-            Character nonRepChar = map.entrySet().stream().filter(e -> e.getValue() == 1)
-                            .map(Map.Entry::getKey).findFirst().orElse(null);
+            Character nonRepChar = map.entrySet().stream()
+                    .filter(e -> e.getValue() == 1)
+                    .map(Map.Entry::getKey).findFirst().orElse(null);
 
             System.out.println("First non-repeating character :"+ nonRepChar);
 
@@ -156,7 +158,7 @@ public class StringWithProrams {
             else
                 System.out.println("String is not anagram");
 
-//        Best interview way (HashMap / int[26])
+//        Best interview way (MapNotes / int[26])
 //        This is faster than sorting:
 
         String s1 = "listen";

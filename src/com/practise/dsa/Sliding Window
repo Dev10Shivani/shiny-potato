@@ -1,0 +1,302 @@
+What is Sliding Window?
+
+Sliding window = a moving range inside an array/string
+Instead of checking all substrings again and again,
+you: keep a window [left … right]
+expand it, shrink it only when rule breaks
+
+Think of it like:
+“I am looking at a part of the string.
+I move forward without going backward.”
+
+🔥 Why Sliding Window exists
+Brute force substring:
+O(n²) or O(n³) -> slow
+Sliding window:
+O(n) -> one pass
+
+🧠 The CORE IDEA (memorize this)
+left = 0
+for right from 0 → n-1:
+    add s[right] to window
+
+    while window is invalid:
+        remove s[left]
+        left++
+
+    update answer using window size
+
+
+That’s it.
+Every sliding window problem fits this shape.
+
+🧩 When do you use Sliding Window?
+If the question has:
+substring / subarray
+longest / shortest
+at most / at least / exactly
+without repeating
+sum / count / frequency
+
+👉 Sliding Window
+
+🧱 Sliding Window has ONLY 2 TYPES
+
+TYPE 1️⃣ Fixed Window Size
+Window size = constant k
+Examples:
+max sum subarray of size k
+average of window k
+substrings of length k
+
+Pattern:
+int left = 0;
+for (int right = 0; right < n; right++) {
+    // add right element
+
+    if (right - left + 1 == k) {
+        // process window
+        // remove left
+        left++;
+    }
+}
+
+TYPE 2️⃣ Variable Window Size (MOST IMPORTANT)
+Window grows & shrinks based on condition
+Examples:
+longest substring without repeating characters
+minimum window substring
+subarray sum ≤ k
+
+🧠 Visual example (VERY IMPORTANT)
+String: "abcabcbb"
+Goal: longest substring without repeating chars
+
+We maintain:
+left → start of window
+right → end of window
+Set → what's inside window
+
+Step 1: [a]
+Step 2: [a b]
+Step 3: [a b c]
+Step 4: 'a' repeats → shrink from left
+        [b c a]
+
+👉 Window slides forward, never backward.
+
+🧠 The 4 Questions you MUST ask yourself
+
+When you see substring / array question, ask:
+
+Q1: Window size fixed or variable?
+fixed → type 1
+depends on condition → type 2
+
+Q2: What makes window INVALID?
+Examples:
+duplicate character
+sum > k
+missing required character
+
+Q3: What data structure do I need?
+duplicate → Set or Map
+frequency → int[26] or Map
+
+Q4: What answer do I update?
+max length?
+min length?
+count?
+
+🧪 Example 1: Longest substring without repeating
+
+Rule broken when:
+duplicate character enters window
+
+Set<Character> set = new HashSet<>();
+int left = 0, max = 0;
+
+for (int right = 0; right < s.length(); right++) {
+    while (set.contains(s.charAt(right))) {
+        set.remove(s.charAt(left));
+        left++;
+    }
+    set.add(s.charAt(right));
+    max = Math.max(max, right - left + 1);
+}
+
+🧪 Example 2: Max sum subarray of size k
+
+Rule:
+window size must be k
+
+int sum = 0, maxSum = 0;
+int left = 0;
+
+for (int right = 0; right < arr.length; right++) {
+    sum += arr[right];
+
+    if (right - left + 1 == k) {
+        maxSum = Math.max(maxSum, sum);
+        sum -= arr[left];
+        left++;
+    }
+}
+
+❌ What Sliding Window is NOT
+NOT recursion
+NOT nested loops
+NOT brute force
+NOT backtracking
+
+🧠 Mental Shortcut (SUPER IMPORTANT)
+Whenever you see:
+substring / subarray
+Immediately say in your head:
+“Can I use sliding window?”
+90% of time → yes.
+
+📌 One-line memory rule
+Expand with right, shrink with left, never go backward.
+
+🎯 What I want you to do next
+Before coding ANY substring problem:
+
+Write:
+window type (fixed / variable)
+invalid condition
+data structure
+THEN code.
+
+------------------------------------------------------------------------------------
+1️⃣ Visual table (step-by-step)
+2️⃣ Universal sliding window template (you can reuse everywhere)
+3️⃣ 10 carefully ordered practice questions (from easy → interview level)
+====
+1️⃣ Sliding Window — VISUAL TABLE (most important part)
+Example: Longest substring without repeating characters
+
+String: "abcabcbb"
+We track:
+left → window start
+right → window end
+set → characters inside window
+
+right	char	action	            left	window	max
+0	    a	    add	                0	    a	    1
+1	    b	    add	                0	    ab	    2
+2	    c	    add	                0	    abc	    3
+3	    a	    duplicate → shrink	1	    bca	    3
+4	    b	    duplicate → shrink	2	    cab	    3
+5	    c	    duplicate → shrink	3	    abc	    3
+6	    b	    duplicate → shrink	5	    cb	    3
+7	    b	    duplicate → shrink	7	    b	    3
+
+🔑 What your brain must notice
+right always moves forward
+left moves only when rule breaks
+Window is always valid after shrinking
+
+2️⃣ THE UNIVERSAL SLIDING WINDOW TEMPLATE (memorize)
+This works for array + string problems.
+
+int left = 0;
+DataStructure window; // Set / Map / array
+Answer ans = initial;
+
+for (int right = 0; right < n; right++) {
+    // 1) add right element
+    add(s[right]);
+
+    // 2) shrink until window becomes valid
+    while (window is invalid) {
+        remove(s[left]);
+        left++;
+    }
+
+    // 3) update answer
+    ans = update(ans, right - left + 1);
+}
+
+🧠 Translation in simple English
+Expand → Check → Shrink → Update → Repeat
+
+3️⃣ How to DECIDE sliding window logic (mental checklist)
+When you see a question, answer these 4 questions on paper or in head:
+Q1️⃣ Is it substring / subarray?
+If yes → sliding window possible
+
+Q2️⃣ Is window size fixed or variable?
+“size k” → fixed window
+“longest / smallest / without / at most” → variable window
+
+Q3️⃣ What breaks the rule?
+Examples:
+duplicate character
+sum > k
+frequency mismatch
+missing character
+
+Q4️⃣ What DS do I need?
+Condition	        DS
+duplicate check	    Set
+last index	        Map
+frequency	        int[26] / Map
+sum	                int
+
+4️⃣ Fixed vs Variable window (very clear)
+🔹 Fixed window example
+Max sum of subarray of size k
+int sum = 0, left = 0, max = 0;
+for (int right = 0; right < arr.length; right++) {
+    sum += arr[right];
+    if (right - left + 1 == k) {
+        max = Math.max(max, sum);
+        sum -= arr[left];
+        left++;
+    }
+}
+
+🔹 Variable window example
+Longest substring without repeating
+Set<Character> set = new HashSet<>();
+int left = 0, max = 0;
+for (int right = 0; right < s.length(); right++) {
+    while (set.contains(s.charAt(right))) {
+        set.remove(s.charAt(left));
+        left++;
+    }
+    set.add(s.charAt(right));
+    max = Math.max(max, right - left + 1);
+}
+
+5️⃣ 10 SLIDING WINDOW PRACTICE QUESTIONS (ORDER MATTERS)
+🟢 Level 1 (warm-up)
+Max sum subarray of size k
+Average of subarrays of size k
+Count substrings of size k
+
+🟡 Level 2 (core logic)
+Longest substring without repeating characters
+Longest substring with at most 2 distinct characters
+Longest subarray with sum ≤ k
+
+🟠 Level 3 (interview standard)
+Find all anagrams in a string
+Minimum window substring
+Longest substring with exactly k distinct characters
+
+🔴 Level 4 (advanced)
+Count substrings with at most k distinct characters
+
+6️⃣ One mistake you MUST avoid
+❌ Writing nested loops immediately
+❌ Trying to remember code
+❌ Mixing substring / subsequence / permutation
+
+✅ First classify:
+fixed or variable window
+breaking condition
+
+7️⃣ One sentence you should repeat
+“I expand with right, shrink with left, and never go backward.”

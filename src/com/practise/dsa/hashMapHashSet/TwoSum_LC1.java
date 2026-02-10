@@ -27,7 +27,7 @@ public class TwoSum_LC1 {
         System.out.println(set);
 
 
-//        HashMap map = new HashMap();
+//        MapNotes map = new MapNotes();
 //
 //        for(int i = 0 ; i < nums.length-1; i++)
 //        {

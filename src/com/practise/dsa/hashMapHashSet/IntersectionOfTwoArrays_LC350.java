@@ -11,7 +11,7 @@ public class IntersectionOfTwoArrays_LC350 {
                 return intersect(nums2, nums1);
             }
 
-            //Create HashMap for counting
+            //Create MapNotes for counting
             Map<Integer, Integer> map = new HashMap<>();
 
             // Count frequency of nums1

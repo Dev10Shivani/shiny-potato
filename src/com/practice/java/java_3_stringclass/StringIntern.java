@@ -42,6 +42,7 @@ public class StringIntern {
         System.out.println(ex1 == ex2); // false
         System.out.println(ex1.intern() == ex2); // true
         System.out.println(ex2.intern() == ex1); //false
+        System.out.println(ex2.intern() == ex1.intern());//true
 
 //        Heap
 //        ┌──────────────────────────────┐
@@ -53,19 +54,22 @@ public class StringIntern {
 //        │  new String("Java") ◄─ ex1  │
 //        └──────────────────────────────┘
 //        Output reasoning
-//        Statement	            Result	Reason
-//        ex1 == ex2	        false	heap vs SCP
-//        ex1.intern() == ex2	true	SCP ref
-//        ex2.intern() == ex1	false	SCP vs heap
+//        Statement	                    Result	Reason
+//        ex1 == ex2	                false	heap vs SCP
+//        ex1.intern() == ex2	        true	SCP ref
+//        ex2.intern() == ex1	        false	SCP vs heap
+//        ex2.intern() == ex1.intern()  true	SCP ref
 
         System.out.println("---------------Example 3----------------");
-        String exp1 = "Hello";
-        String exp2 = new String("Hello");
-        String exp3 = exp2.intern();
+        String exp1 = "Hello"; //SCP exp1 ref
+        String exp2 = new String("Hello"); // new obj ref
+        String exp3 = exp2.intern(); // point to same as exp1
+
         System.out.println(exp1 == exp3); // true
         System.out.println(exp1.intern() == exp3);//true
         System.out.println(exp3.intern() == exp1);//true
         System.out.println(exp3.intern() == exp3);//true
+
         System.out.println(exp2 == exp3); // false
         System.out.println(exp2.intern() == exp3);//true
         System.out.println(exp2 == exp3.intern());//false
@@ -127,7 +131,43 @@ public class StringIntern {
 //        exmp1 == exmp3 → ❌ heap vs SCP → false
 //        exmp2 == exmp3 → ✅ same SCP object → true
 
+        System.out.println("---------------Example 5----------------");
         String sval = new String("A");
+            /*JVM checks String Constant Pool (SCP)
+            Literal "A" is created in SCP (if not already present)
+            new String("A") creates a new heap object
+            sval points to the heap object
+            📌 Objects now:
+            SCP → "A"
+            Heap → new String("A")*/
         System.out.println(sval.intern() == "A");// true
+            /*JVM checks SCP
+            "A" already exists
+            intern() returns reference to SCP object
+            Literal "A" → always refers to SCP object*/
+
+//                String Constant Pool (SCP)
+//                --------------------------
+//                | "A"        <------------+
+//                --------------------------             |
+//                |
+//                Heap Memory                            |
+//                --------------------------             |
+//                | new String("A")         |            |
+//                |        ↑                |            |
+//                |       sval              |            |
+//                --------------------------             |
+//                |
+//                sval.intern()  -----------------------+
+//                "A" ----------------------------------+
+//                Both point to SCP "A"
+
+//                | Object          | Location      |
+//                | --------------- | ------------- |
+//                | "A" literal     | SCP           |
+//                | new String("A") | Heap          |
+//                | intern() result | SCP reference |
+
+
     }
 }

@@ -1,0 +1,143 @@
+Queue<Integer> q = new LinkedList<>();
+✔️ Valid
+✔️ Common
+✔️ Correct
+
+But… not always the best choice.
+Now let’s understand why, not just that it works.
+
+🧠 WHY this works (core Java concept)
+Queue is an interface
+public interface Queue<E> extends Collection<E>
+LinkedList implements Queue
+public class LinkedList<E>
+    implements List<E>, Deque<E>
+So this is classic polymorphism:
+
+Queue<Integer> q = new LinkedList<>();
+➡️ You program to the interface, not the implementation
+➡️ This is good design
+
+🔍 What operations are you allowed to use?
+Because the reference type is Queue:
+
+q.add(10);
+q.offer(20);
+q.poll();
+q.peek();
+❌ You cannot do:
+
+q.get(0);   // not allowed
+Even though LinkedList supports it — because Queue reference restricts access.
+
+🧠 This is intentional design, not a limitation.
+
+🧱 Now the IMPORTANT part (interview-level clarity)
+Should you use LinkedList for Queue?
+❌ Usually NO
+✅ Prefer ArrayDeque
+🔥 Why ArrayDeque is BETTER than LinkedList
+Aspect	LinkedList	ArrayDeque
+Internal structure	Nodes + pointers	Resizable array
+Memory usage	High (prev + next)	Low
+Cache locality	Poor	Good
+Performance	Slower	Faster
+Null allowed	Yes	❌ No
+Recommended way
+Queue<Integer> q = new ArrayDeque<>();
+🧠 This is what interviewers want to hear.
+
+❗ Why LinkedList is still allowed
+Because:
+
+It was the original Queue implementation
+
+Needed for backward compatibility
+
+Useful when you also need List operations (rare)
+
+🔑 Interview-ready explanation (MEMORIZE)
+“Yes, we can assign a Queue reference to a LinkedList object because LinkedList implements Queue. However, in practice, ArrayDeque is preferred for queue operations due to better performance and lower memory overhead.”
+
+That sentence alone shows senior-level clarity.
+
+🧩 Deque (important connection)
+Deque = Double-ended Queue
+Supports:
+
+FIFO (queue)
+
+LIFO (stack)
+
+Deque<Integer> dq = new ArrayDeque<>();
+dq.addLast(1);   // queue add
+dq.removeFirst(); // queue remove
+dq.push(2);      // stack push
+dq.pop();        // stack pop
+🧠 This is why:
+
+Stack → ❌ legacy
+
+Deque → ✅ modern replacement
+
+🧭 Where you are now
+You now understand:
+
+Interface vs implementation
+
+Why Queue = new LinkedList() works
+
+Why ArrayDeque is better
+
+How Queue fits into sliding window & stacks
+
+This clears a huge conceptual gap.
+
+🎯 Quick check (answer in 1 line)
+Why is ArrayDeque generally preferred over LinkedList for Queue implementation?
+
+Reply, and then we’ll:
+
+finish Queue / Deque completely
+
+move confidently to Streams + Functional Interfaces
+
+---
+Why is ArrayDeque generally preferred over LinkedList for Queue implementation?
+ArrayDeque is generally preferred over LinkedList for Queue implementation because it uses contiguous memory (better cache locality), has lower memory overhead (no node pointers), and avoids unnecessary synchronization, resulting in better performance.
+
+🧠 Why this answer works
+
+You covered the three things interviewers care about:
+
+1️⃣ Memory model
+
+ArrayDeque → contiguous array
+
+LinkedList → node + prev + next (heavy)
+
+2️⃣ Performance
+
+Better cache locality → faster operations
+
+3️⃣ Threading
+
+No synchronization overhead by default
+
+Perfect.
+
+✅ Queue / Deque — STATUS COMPLETE
+
+At this point, you clearly understand:
+
+Queue vs Deque
+
+Why Queue = new LinkedList() works
+
+Why ArrayDeque is preferred
+
+Why Stack is legacy and replaced by Deque
+
+How Queue fits sliding window problems
+
+This was the last core collection structure you needed.

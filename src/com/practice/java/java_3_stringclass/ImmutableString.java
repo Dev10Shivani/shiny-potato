@@ -6,7 +6,8 @@ public class ImmutableString {
         // Variables store references, not objects.
         // When you “change” a String, Java creates a new String object and updates the reference.
 
-        //String variables str1 & str2 holds reference of object "Test" and the object "Test" store inside String Constant Pool & each string literal is final/constant
+        //String variables str1 & str2 holds reference of object "Test" and the object "Test" store inside
+        // String Constant Pool & each string literal is final/constant
         //"Test" is stored in the String Constant Pool
         // str1 and str2 point to the same object
         // str 1 & str2 is string literal because they are created using " ";
@@ -14,7 +15,7 @@ public class ImmutableString {
         String str2 = "Test";
 
         //String objects are store inside heap memory, Even though "Test" exists in pool, new keyword forces a separate object
-        String str3 = new String ("Test");
+        String str3 = new String("Test");
 
         str1 = "Test1"; //Try to change string literal
         System.out.println("String literal str1 value :"+ str1);
