@@ -34,7 +34,7 @@
                                                      addAll(), replaceAll(), min(), max(), indexOfSubList(), LastIndexOfSubList(),
                                             emptyEnumeration(), emptyIterator(), emptyListIterator(), emptyList(), emptySet(),emptyMap(),
                                                        singleton(), singletonList(),singletonMap(), unmodifiableCollection()
-                                               synchronizedCollection(), synchronizedList(), synchronizedSet(), synchronizedMap()
+                                               synchronizedCollection(), synchronizedList(), synchro nizedSet(), synchronizedMap()
 
 
 

@@ -1,0 +1,547 @@
+🧩 COMBINED CODING — Seen-Before → Order → Frequency → Sliding Window
+
+We’ll solve 4 classic interview problems in increasing power.
+Read them together — notice how only data structure changes, not brain.
+
+1️⃣ Check if ANY duplicate exists (yes / no)
+Pattern -> Seen-Before
+Data structure -> HashSet
+Code ->
+int[] arr = {1, 2, 3, 4, 2};
+Set<Integer> seen = new HashSet<>();
+boolean hasDuplicate = false;
+for (int x : arr) {
+    if (!seen.add(x)) {
+        hasDuplicate = true;
+        break;
+    }
+}
+System.out.println(hasDuplicate);
+
+Why this works
+set.add(x) returns false if already present
+No order, no count → simplest structure
+
+
+2️⃣ Find the FIRST repeating element
+Pattern -> Seen-Before + Order
+Data structure -> LinkedHashSet
+Code ->
+int[] arr = {4, 5, 1, 2, 5, 3};
+Set<Integer> seen = new LinkedHashSet<>();
+for (int x : arr) {
+    if (!seen.add(x)) {
+        System.out.println("First repeating: " + x);
+        break;
+    }
+}
+
+Why this works
+Iteration order = insertion order
+First element that fails add() is the answer
+
+3️⃣ Find the FIRST NON-repeating character in a string
+Pattern -> Frequency + Order
+Data structure -> LinkedHashMap
+Code ->
+String s = "aabbcdd";
+Map<Character, Integer> freq = new LinkedHashMap<>();
+for (char c : s.toCharArray()) {
+    freq.put(c, freq.getOrDefault(c, 0) + 1);
+}
+for (Map.Entry<Character, Integer> e : freq.entrySet()) {
+    if (e.getValue() == 1) {
+        System.out.println("First non-repeating: " + e.getKey());
+        break;
+    }
+}
+
+Why this works
+LinkedHashMap preserves insertion order
+Frequency tells non-repeating
+First key with count 1 wins
+
+4️⃣ Longest substring without repeating characters (LC-3)
+Pattern -> Variable Sliding Window + Seen-Before
+Data structure -> HashMap<Character, Integer> (last index)
+Code
+String s = "abcabcbb";
+Map<Character, Integer> lastIndex = new HashMap<>();
+int left = 0;
+int maxLen = 0;
+int start = 0;
+for (int right = 0; right < s.length(); right++) {
+    char ch = s.charAt(right);//a
+    if (lastIndex.containsKey(ch) && lastIndex.get(ch) >= left) {
+        left = lastIndex.get(ch) + 1;
+    }
+    lastIndex.put(ch, right);
+
+    if (right - left + 1 > maxLen) {
+        maxLen = right - left + 1;
+        start = left;
+    }
+}
+System.out.println("Length: " + maxLen);
+System.out.println("Substring: " + s.substring(start, start + maxLen));
+
+Why this works
+Window grows with right
+Jumps left past last duplicate
+Maintains uniqueness at all times
+
+🔑 MASTER MENTAL TABLE (READ THIS DAILY)
+Question asks	            Pattern	Data            structure
+any duplicate?	            seen-before	            HashSet
+first duplicate	            seen + order	        LinkedHashSet
+first non-repeating	        frequency + order	    LinkedHashMap
+longest unique substring	sliding window + seen	HashMap
+
+=========================================================================
+🔑 The ONE RULE you must remember
+right always moves forward
+left moves only when the rule is broken
+
+🧠 Let’s rewrite the LC-3 logic in PLAIN ENGLISH
+
+Problem:
+Longest substring without repeating characters
+
+Rule:
+“Window must contain only unique characters”
+
+🔁 Step-by-step logic (human version)
+For each character at position right:
+Check: does this character break my rule?
+If yes → move left until rule is fixed
+Once rule is valid → update answer
+
+🔍 What EXACTLY breaks the rule here?
+Duplicate character inside the current window
+So the condition is:
+lastIndex.containsKey(ch) && lastIndex.get(ch) >= left
+That’s the ONLY reason left moves.
+
+🧠 Why >= left matters (this is where confusion happens)
+Let’s say:
+String  = abcabcbb
+Indexes = 01234567
+At right = 3 → 'a'
+last 'a' was at index 0
+current window is [left = 0 … right = 3]
+So 'a' is inside the window → rule broken
+➡️ Move left to 0 + 1 = 1
+If last 'a' was before left, we ignore it.
+
+🔑 So remember this sentence:
+We only care about duplicates that are INSIDE the window.
+That’s why:
+lastIndex.get(ch) >= left
+
+🧩 WHEN do we update maxLen?
+Rule (lock this in):
+Update length ONLY after the window is valid
+So:
+Move left first (if needed)
+Then calculate:
+currentLength = right - left + 1
+Never before.
+
+🧠 Rewrite the code in “thinking steps”
+for each right:
+    if rule broken:
+        fix window by moving left
+
+    window is now valid
+    update answer
+
+That’s the mental model.
+
+🧪 Tiny dry-run (last time, simple)
+String: "abba"
+
+right	char	action	                left	window
+0	    a	    ok	                    0	    a
+1	    b	    ok	                    0	    ab
+2	    b	    duplicate → move left	2	    b
+3	    a	    ok	                    2	    ba
+
+Max length = 2
+
+🔑 3 COMMON MISTAKES (you’re avoiding them now)
+❌ Moving left every time
+❌ Updating length before fixing window
+❌ Forgetting >= left condition
+
+========================================================================================================================
+SLIDING WINDOW PRACTICE SET (Variable Window)
+🔑 Universal reminder (don’t skip)
+Right always moves.
+Left moves only when the rule is broken.
+Answer updates only when the window is valid.
+
+✅ Problem 1: Longest substring with at most 2 distinct characters
+Example
+Input: "eceba"
+Output: 3   // "ece"
+
+Step 1️⃣ Identify the rule
+Window can have ≤ 2 distinct characters
+
+Step 2️⃣ What breaks the rule?
+Distinct character count > 2
+
+Step 3️⃣ Data structure
+HashMap<Character, Integer> → frequency
+
+Step 4️⃣ Code
+String s = "eceba";
+Map<Character, Integer> freq = new HashMap<>();
+int left = 0, maxLen = 0;
+for (int right = 0; right < s.length(); right++) {
+    char ch = s.charAt(right);
+    freq.put(ch, freq.getOrDefault(ch, 0) + 1);//e-1| c-1 |e-2 |b-1
+
+    // rule broken
+    while (freq.size() > 2) {1|2|2|3
+        char leftChar = s.charAt(left);//e,c
+        freq.put(leftChar, freq.get(leftChar) - 1);//e-1,c-0
+        if (freq.get(leftChar) == 0) {
+            freq.remove(leftChar);
+        }
+        left++;//1
+    }
+
+    // window valid
+    maxLen = Math.max(maxLen, right - left + 1);// 0, 0-0+1=1 : 1| 1, 1-0+1=2 : 2| 2, 2-0+1=3 :3 |
+}
+
+System.out.println(maxLen);
+
+🧠 Key takeaway
+freq.size() controls validity
+left moves only when size > 2
+
+✅ Problem 2: Longest subarray with sum ≤ k
+Example
+arr = [2,1,5,1,3], k = 7
+Output: 4   // [1,5,1]
+
+Step 1️⃣ Rule
+Window sum must be ≤ k
+
+Step 2️⃣ What breaks the rule?
+sum > k
+
+Step 3️⃣ Data structure
+Just an int sum
+
+Step 4️⃣ Code
+int[] arr = {2, 1, 5, 1, 3};
+int k = 7;
+int left = 0, sum = 0, maxLen = 0;
+for (int right = 0; right < arr.length; right++) {
+    sum += arr[right];
+
+    // rule broken
+    while (sum > k) {
+        sum -= arr[left];
+        left++;
+    }
+
+    // window valid
+    maxLen = Math.max(maxLen, right - left + 1);
+}
+System.out.println(maxLen);
+
+🧠 Key takeaway
+Same structure as substring problems
+Only the rule changes
+
+✅ Problem 3: Longest substring with no repeating characters (revisited cleanly)
+This is the one you found tricky — let’s make it mechanical.
+
+Step 1️⃣ Rule
+All characters must be unique
+
+Step 2️⃣ What breaks the rule?
+Character already exists inside window
+
+Step 3️⃣ Data structure
+HashMap<Character, Integer> → last index
+
+Step 4️⃣ Code (clean & final)
+String s = "abcabcbb";
+Map<Character, Integer> last = new HashMap<>();
+int left = 0, maxLen = 0;
+for (int right = 0; right < s.length(); right++) {
+    char ch = s.charAt(right);
+
+    if (last.containsKey(ch) && last.get(ch) >= left) {
+        left = last.get(ch) + 1;   // jump left
+    }
+
+    last.put(ch, right);
+    maxLen = Math.max(maxLen, right - left + 1);
+}
+System.out.println(maxLen);
+
+🧠 Why this version feels easier
+No while loop
+left jumps directly
+Condition is explicit
+
+🔑 THE SLIDING WINDOW DECISION FORMULA (MEMORIZE)
+
+Before coding, ask:
+What is the rule?
+When does it break?
+What must I shrink?
+When is the window valid again?
+If you answer those → code writes itself.
+
+=========================================================================================================================
+Longest substring with at most K distinct characters
+
+1️⃣ Rule
+✅ Variable-length sliding window + frequency
+Window can contain at most K distinct characters
+
+2️⃣ Condition to move left
+You said:
+(count > k)
+That’s almost right, but let’s be precise.
+✅ Correct condition:
+When number of distinct characters > K
+In code:
+while (freqMap.size() > k)
+
+3️⃣ Data structure
+✅ HashMap
+Why?
+We need frequency
+We need to know when a character count becomes zero to remove it
+map.size() tells us distinct count
+
+🧠 Why this is NOT fixed-length (this matters)
+Fixed-length window example:
+    “Find max sum of subarray of size K”
+    There:
+    Window size is always K
+    Left moves every time right moves
+
+Variable-length window (this problem):
+    Window grows when valid
+    Window shrinks only when rule breaks
+    Length changes dynamically
+
+🔑 One-line mental rule (memorize)
+
+If window size depends on a condition → variable-length window
+If window size is given → fixed-length window
+
+✅ Final corrected version (what you should say)
+
+1️⃣ Pattern: Variable-length sliding window with frequency
+2️⃣ Move left when distinct character count exceeds K
+3️⃣ Use HashMap to track frequencies and distinct count
+
+That’s perfect.
+
+========================================================================================================================
+
+How do you decide between using while vs if when shrinking the window?
+
+✅ Your idea (correct direction)
+You said:
+“when I have to loop condition till true then while. if once then if”
+That’s right — but let’s translate it into sliding-window language, so your brain knows when to use which without guessing.
+
+🔑 The REAL rule (lock this in)
+Use while when the window may still be invalid after one shrink.
+Use if when one adjustment always restores validity.
+
+🧠 Why while is usually needed
+Most sliding-window problems have rules like:
+    distinct count ≤ K
+    sum ≤ K
+    no duplicates
+
+When the rule breaks:
+    Removing one element may NOT be enough
+    You must keep shrinking until the rule is satisfied again
+
+    Example: at most K distinct characters
+    while (freq.size() > k) {
+        // keep shrinking
+    }
+
+    Because:
+    Removing one char may still leave freq.size() > k
+
+👉 while is the default choice in sliding window
+
+🧠 When if is enough (special case)
+
+Use if only when:
+You jump left directly to a known valid position
+One move is guaranteed to fix the window
+
+Example: Longest substring without repeating characters
+if (lastIndex.get(ch) >= left) {
+    left = lastIndex.get(ch) + 1;
+}
+
+Why if works here:
+You jump past the duplicate in one step
+Window becomes valid immediately
+
+🔑 Interview-ready answer (use this)
+“I use while when shrinking the window may require multiple steps to restore validity, and if when a single adjustment guarantees the window becomes valid.”
+
+🧭 Final sliding-window cheat rule (remember this)
+Situation	                Use
+Need to shrink repeatedly	while
+One jump fixes window	    if
+
+========================================================================================================================
+Why is while safer than if in most sliding-window problems?
+while is safer because the window may remain invalid after one shrink, so we must keep shrinking until the condition is fully satisfied.
+
+Why this matters
+In most sliding-window problems, one removal isn’t guaranteed to fix the rule.
+while ensures the window becomes valid before we update the answer.
+Using if can leave the window partially invalid, leading to wrong results.
+
+========================================================================================================================
+Fixed-length sliding window will feel much easier now because it has one less decision than variable-length.
+
+🧩 FIXED-LENGTH SLIDING WINDOW (Clear & Mechanical)
+🔑 Big difference from variable-length
+Window size is given and NEVER changes
+So:
+right moves forward
+left moves forward every time window exceeds size K
+
+No “while vs if” confusion here
+🧠 Fixed-length sliding window template (MEMORIZE)
+int left = 0;
+for (int right = 0; right < n; right++) {
+
+    // add right element to window
+
+    if (right - left + 1 > k) {
+        // remove left element
+        left++;
+    }
+
+    if (right - left + 1 == k) {
+        // process window
+    }
+}
+This template works for 90% of fixed-window problems.
+
+✅ Problem 1: Maximum sum of subarray of size K
+Example
+arr = [2,1,5,1,3,2], k = 3
+Output = 9   // [5,1,3]
+
+Step 1️⃣ Rule
+Window size must be exactly K
+
+Step 2️⃣ What do we track?
+Sum of window
+
+Step 3️⃣ Code
+int[] arr = {2, 1, 5, 1, 3, 2};
+int k = 3;
+int left = 0, sum = 0, maxSum = 0;
+for (int right = 0; right < arr.length; right++) {
+    sum += arr[right];
+
+    if (right - left + 1 > k) {
+        sum -= arr[left];
+        left++;
+    }
+
+    if (right - left + 1 == k) {
+        maxSum = Math.max(maxSum, sum);
+    }
+}
+System.out.println(maxSum);
+
+🧠 Why this is easy
+    Window size controls movement
+    No rule checking
+    No frequency map
+
+✅ Problem 2: First negative number in every window of size K
+Example
+arr = [12,-1,-7,8,-15,30,16,28], k = 3
+Output = [-1, -1, -7, -15, -15, 0]
+
+Step 1️⃣ Rule
+Window size = K
+
+Step 2️⃣ Data structure
+Queue to store negative numbers
+
+Step 3️⃣ Code
+int[] arr = {12, -1, -7, 8, -15, 30, 16, 28};
+int k = 3;
+Queue<Integer> q = new LinkedList<>();
+int left = 0;
+for (int right = 0; right < arr.length; right++) {
+    if (arr[right] < 0) {
+        q.add(arr[right]);
+    }
+
+    if (right - left + 1 > k) {
+        if (!q.isEmpty() && arr[left] == q.peek()) {
+            q.poll();
+        }
+        left++;
+    }
+
+    if (right - left + 1 == k) {
+        System.out.print(q.isEmpty() ? 0 : q.peek());
+        System.out.print(" ");
+    }
+}
+
+🧠 Key idea
+    Queue tracks useful elements in window
+    Remove element when it leaves window
+
+🔑 Compare fixed vs variable (LOCK THIS)
+
+Fixed-length	                    Variable-length
+Size given	                        Size changes
+left moves every time window > k	left moves only when rule breaks
+Simple	                            More thinking
+Sum / count problems	            Substring / distinct problems
+
+========================================================================================================================
+
+Why don’t we need a while loop in fixed-length sliding window?
+We don’t need a while loop in fixed-length sliding window because the window size is strictly controlled,
+and removing exactly one element is always enough to restore the window to size K.
+
+🧠 Why this is true (lock it in your mind)
+In fixed-length window:
+The only rule is 👉 window size must be K
+When size becomes K + 1
+❌ window is invalid
+✅ removing one element always fixes it
+So:
+if (windowSize > k) {
+    remove one element;
+}
+
+There is no scenario where removing one element is not enough — hence no while needed.
+
+🔑 Compare with variable window (quick contrast)
+Variable window → rule may still be broken → need while
+Fixed window → size violation fixed in one step → if is enough
+
+========================================================================================================================
