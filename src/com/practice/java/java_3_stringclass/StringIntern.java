@@ -143,7 +143,9 @@ public class StringIntern {
         System.out.println(sval.intern() == "A");// true
             /*JVM checks SCP
             "A" already exists
-            intern() returns reference to SCP object
+            intern() returns
+
+             to SCP object
             Literal "A" → always refers to SCP object*/
 
 //                String Constant Pool (SCP)

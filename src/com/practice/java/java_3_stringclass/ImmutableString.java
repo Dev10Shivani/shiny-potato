@@ -12,20 +12,21 @@ public class ImmutableString {
         // str1 and str2 point to the same object
         // str 1 & str2 is string literal because they are created using " ";
         String str1 = "Test";
+
         String str2 = "Test";
 
         //String objects are store inside heap memory, Even though "Test" exists in pool, new keyword forces a separate object
         String str3 = new String("Test");
 
         str1 = "Test1"; //Try to change string literal
-        System.out.println("String literal str1 value :"+ str1);
-        System.out.println("String literal str2 value :"+ str2);
+        System.out.println("String literal str1 value :"+ str1);//Test1
+        System.out.println("String literal str2 value :"+ str2);//Test
 
         str3 = "Test3"; //Try to change string object
-        System.out.println("String object str3 value :"+ str3);
+        System.out.println("String object str3 value :"+ str3);//Test3
 
         str3 = new String ("Test4");; //Try to change string object
-        System.out.println("String object str3 value :"+ str3);
+        System.out.println("String object str3 value :"+ str3);//Test4
 
         /* o/p:
             String literal str1 value :Test1

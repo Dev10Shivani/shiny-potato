@@ -21,7 +21,7 @@ public class VariableOperator {
 //            List<Integer> l = java.util.List.of(1,2,3);
 
             int x = 5;
-            System.out.println(++x + x++);
+            System.out.println(++x + x++);//6+6
 
 //            while(false){
 //                System.out.println("Hello"); //not compiled

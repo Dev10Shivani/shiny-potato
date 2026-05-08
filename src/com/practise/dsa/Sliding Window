@@ -118,7 +118,7 @@ int left = 0, max = 0;
 
 for (int right = 0; right < s.length(); right++) {
     while (set.contains(s.charAt(right))) {
-        set.remove(s.charAt(left));
+        set.remove(s.charAt(left));// left means count/index present at left for that position like, if left = 2, s.charAt(2)
         left++;
     }
     set.add(s.charAt(right));
@@ -182,15 +182,24 @@ left → window start
 right → window end
 set → characters inside window
 
-right	char	action	            left	window	max
-0	    a	    add	                0	    a	    1
-1	    b	    add	                0	    ab	    2
-2	    c	    add	                0	    abc	    3
-3	    a	    duplicate → shrink	1	    bca	    3
-4	    b	    duplicate → shrink	2	    cab	    3
-5	    c	    duplicate → shrink	3	    abc	    3
-6	    b	    duplicate → shrink	5	    cb	    3
-7	    b	    duplicate → shrink	7	    b	    3
+right	char	action	            left	window	    max
+0	    a	    add	                0	    a	        1
+1	    b	    add	                0	    ab	        2
+2	    c	    add	                0	    abc	        3
+3	    a	    duplicate → shrink	1	    bc a	    3 abcabcbb ->s(left=0)->a removed-> left = 1
+4	    b	    duplicate → shrink	2	    ca b	    3 abcabcbb ->s(left=1)->b removed-> left = 2
+5	    c	    duplicate → shrink	3	    ab c	    3 abcabcbb ->s(left=2)->c removed-> left = 3
+6	    b	    duplicate → shrink	5	    c  b	    3 abcabcbb ->s(left=3)->a removed-> left = 4
+7	    b	    duplicate → shrink	7	    b	        3 abcabcbb ->s(left=4)->b removed-> left = 5
+
+for (int right = 0; right < s.length(); right++) {
+    while (set.contains(s.charAt(right))) {
+        set.remove(s.charAt(left));// left means count/index present at left for that position like, if left = 2, s.charAt(2)
+        left++;
+    }
+    set.add(s.charAt(right));
+    max = Math.max(max, right - left + 1);
+}
 
 🔑 What your brain must notice
 right always moves forward

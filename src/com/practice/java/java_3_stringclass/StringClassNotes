@@ -65,6 +65,7 @@ A. Security
      Example problem if String were mutable
     String url = "jdbc:mysql://localhost:3306/db";
 
+
     If String were mutable:
     * Another reference could change the value
     * DB connection could be redirected to a malicious server
@@ -118,7 +119,7 @@ Summary: Why String is immutable
                                              not comparable(compareTo) Natural sorting order support- use comparator(compare) for custom sorting,
                                                                     (same methods for StringBuilder & StringBuffer)
                                                                                            |
-                                          append(str), insert(offset, str), replace((startIdx, endIdx, str), delete(startIdx, endIdx), reverse(),
+                                          append(str), insert(offset, str), replace(startIdx, endIdx, str), delete(startIdx, endIdx), reverse(),
                      capacity() default 16 : (oldCapacity * 2) + 2, ensureCapacity(minCapacity), charAt(inx), length(), subString(startIdx), subString(startIdx, endIdx)
 
                                                              StringBuffer - synchronized, Thread-safe, performance slow
@@ -126,7 +127,7 @@ Summary: Why String is immutable
 
 Difference: String vs StringBuilder vs StringBuffer
 
-| Feature                   | String                                 | StringBuilder                               | StringBuffer |
+| Feature                   | String                                 | StringBuilder                               | StringBuffer                                 |
 | --------------------------| ---------------------------------------| --------------------------------------------| ---------------------------------------------|
 | Mutable                   | ❌ No                                  | ✅ Yes                                      | ✅ Yes                                       |
 | Thread-safe (synchronized)| ✅ Yes                                 | ❌ No                                       | ✅ Yes                                       |
