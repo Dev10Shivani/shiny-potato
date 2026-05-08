@@ -15,17 +15,17 @@ public || private*/
 //--------1--------
 //-----------------default methods parent and child..simple inheritance.. parent reference type = child as object type. instance creation and method call.
 //“In Java, overridden methods are resolved at runtime based on the actual object type, not the reference type.”
-/*class A {
+class A1 {
     void print() {
         System.out.println("A");
     }
 }
-class B extends A {
+class B1 extends A1 {
     void print() {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
 //        A obj = new B();
 //        obj.print(); //B
@@ -35,8 +35,8 @@ public class Inheritance {
 //        obj1.print();//A
 
         //Typecasting (NOT useful here)
-        A obj2 = new B();
-        ((A)obj2).print();//B
+        A1 obj2 = new B1();
+        ((A1)obj2).print();//B
         //Because:Method resolution depends on object type, not reference type
 
 //        🧠 Key Concept (VERY IMPORTANT)
@@ -44,7 +44,7 @@ public class Inheritance {
 //        Reference type (A obj)	Which methods are accessible
 //        Object type (new B())	Which method is executed
     }
-}*/
+}
 
 //--------2--------
 //-----------------default methods parent and child, but parent reference=child object -- want to call parent method. use super in child class method.
@@ -61,7 +61,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); //A B
@@ -85,7 +85,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); //B
@@ -104,7 +104,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); //B
@@ -123,7 +123,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); // CT error: java: print() in com.practice.java.java_1_oops.B cannot override print() in com.practice.java.java_1_oops.A
@@ -147,7 +147,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); // A B
@@ -167,7 +167,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); // CT error: java: print() in com.practice.java.java_1_oops.B cannot override print() in com.practice.java.java_1_oops.A
@@ -188,7 +188,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); // A B
@@ -208,7 +208,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); //CT error
@@ -231,7 +231,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); // A B
@@ -251,7 +251,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); //CT error
@@ -271,7 +271,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print();//CT error
@@ -291,7 +291,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); //CT error
@@ -314,7 +314,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); // CT error: java: print() has private access in com.practice.java.java_1_oops.A
@@ -340,7 +340,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print(); //CT error
@@ -360,7 +360,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print();//CT error
@@ -380,7 +380,7 @@ class B extends A {
         System.out.println("B");
     }
 }
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.print();//CT error
@@ -406,7 +406,7 @@ class B extends A {
     }
 }
 
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         B b = new B();
         b.print();  // This will call B's print() //if A->private B->default
@@ -430,7 +430,7 @@ class B extends A {
     }
 }
 
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
 //        A obj = new B();
 //        obj.show(); //CT error
@@ -462,7 +462,7 @@ class B extends A {
     }
 }
 
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.show(); //CT error
@@ -496,7 +496,7 @@ class B extends A {
     }
 }
 
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
 //        A obj = new B();
 //        obj.show(); //CT error : java: show() has private access in com.practice.java.java_1_oops.A
@@ -526,7 +526,7 @@ class B extends A {
     }
 }
 
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
 //        A obj = new B();
 //        obj.show(); //CT error : static or default B method
@@ -546,7 +546,7 @@ public class Inheritance {
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
 // Parent default methods - child final
-//moth method consider as different --not overriden method
+//both method consider as different --not overriden method
 /*class A {
     void show() {
         System.out.println("A");
@@ -559,7 +559,7 @@ class B extends A {
     }
 }
 
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
         A obj = new B();
         obj.show(); //B
@@ -589,7 +589,7 @@ class B extends A {
     }
 }
 
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
 //        A obj = new B();
 //        obj.show(); //java: show() in com.practice.java.java_1_oops.B cannot override show() in com.practice.java.java_1_oops.A
@@ -610,8 +610,7 @@ public class Inheritance {
 
 // Parent static methods - child final
 //CT error : cannot override static method
-/*
-class A {
+/*class A {
     static void show() {
         System.out.println("A");
     }
@@ -623,7 +622,7 @@ class B extends A {
     }
 }
 
-public class Inheritance {
+public class InheritanceOverriding {
     public static void main(String[] args) {
 //        A obj = new B();
 //        obj.show();//CT error
